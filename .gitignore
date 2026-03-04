@@ -23,3 +23,9 @@ build/
 # IDEs
 .vscode/
 .idea/
+
+# Book files
+*.txt
+*.epub
+*.pdf
+

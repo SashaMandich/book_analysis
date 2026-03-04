@@ -116,14 +116,14 @@ class HTMLBuilder:
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 
   :root {{
-    --bg: #0e0c0a;
-    --surface: #161210;
-    --gold: #c4a45a;
-    --gold-l: #e0c880;
-    --muted: #7a6a55;
-    --dim: #5a4a38;
-    --text: #e8dcc8;
-    --border: #2a2018;
+    --bg: #f8f4ee;
+    --surface: #f0ebe2;
+    --gold: #b8884a;
+    --gold-l: #c09a60;
+    --muted: #8a7a6a;
+    --dim: #b8a898;
+    --text: #4a3f35;
+    --border: #ddd5c8;
   }}
 
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -150,7 +150,7 @@ class HTMLBuilder:
     top: 0; left: 0; right: 0;
     z-index: 10;
     padding: 16px 32px 22px;
-    background: linear-gradient(to bottom, rgba(14,12,10,0.98) 60%, transparent);
+    background: linear-gradient(to bottom, rgba(248,244,238,0.98) 60%, transparent);
     display: flex;
     align-items: baseline;
     gap: 14px;
@@ -206,7 +206,7 @@ class HTMLBuilder:
     position: fixed;
     left: 0; top: 0; bottom: 0;
     width: 300px;
-    background: linear-gradient(to right, rgba(14,12,10,0.97) 78%, transparent);
+    background: linear-gradient(to right, rgba(248,244,238,0.97) 78%, transparent);
     padding: 68px 28px 36px 28px;
     display: flex;
     flex-direction: column;
@@ -243,7 +243,7 @@ class HTMLBuilder:
   #panel-desc {{
     font-size: 13px;
     line-height: 1.78;
-    color: #b0a090;
+    color: #7a6a5a;
     margin-bottom: 22px;
     padding-left: 12px;
     border-left: 1px solid var(--dim);
@@ -284,7 +284,7 @@ class HTMLBuilder:
     position: fixed;
     right: 0; top: 0; bottom: 0;
     width: 290px;
-    background: linear-gradient(to left, rgba(14,12,10,0.97) 78%, transparent);
+    background: linear-gradient(to left, rgba(248,244,238,0.97) 78%, transparent);
     padding: 68px 28px 36px 18px;
     border-left: 1px solid var(--border);
     overflow-y: auto;
@@ -310,7 +310,7 @@ class HTMLBuilder:
   #summary p {{
     font-size: 13px;
     line-height: 1.82;
-    color: #9a8a78;
+    color: #7a6a5a;
     margin-bottom: 13px;
     font-style: italic;
   }}
@@ -320,7 +320,7 @@ class HTMLBuilder:
     position: fixed;
     left: 22px;
     bottom: 22px;
-    background: rgba(14,12,10,0.88);
+    background: rgba(248,244,238,0.92);
     border: 1px solid var(--dim);
     border-radius: 3px;
     padding: 12px 16px;
