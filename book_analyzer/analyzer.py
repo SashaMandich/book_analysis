@@ -17,6 +17,7 @@ class ClaudeAnalyzer:
 
     SYSTEM_PROMPT = """\
 You are a literary analyst specializing in character mapping.
+You must determine language used in book and produce output in the same language.
 Your task is to analyze a book excerpt and return structured JSON data about its characters and their relationships.
 Return ONLY valid JSON, no markdown fences, no preamble."""
 
@@ -31,7 +32,7 @@ Return ONLY this JSON structure (no markdown, no extra text):
 {{
   "book_title": "Title of the book",
   "author": "Author name",
-  "book_summary": "3-4 sentence plot summary of the book",
+  "book_summary": "6-8 sentence plot summary of the book",
   "characters": [
     {{
       "id": "unique_snake_case_id",
