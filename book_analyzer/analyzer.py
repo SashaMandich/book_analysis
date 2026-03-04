@@ -32,7 +32,7 @@ Return ONLY this JSON structure (no markdown, no extra text):
 {{
   "book_title": "Title of the book",
   "author": "Author name",
-  "book_summary": "6-8 sentence plot summary of the book",
+  "book_summary": "4-6 sentence plot summary of the book",
   "characters": [
     {{
       "id": "unique_snake_case_id",

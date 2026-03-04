@@ -33,24 +33,6 @@ class HTMLBuilder:
             r["color"] = cfg.LINK_COLORS.get(rel_type, cfg.DEFAULT_LINK_COLOR)
             r["dash"]  = cfg.LINK_DASH.get(rel_type, "")
 
-    # ── Legend fragment builders ──────────────────────────────────────────────
-
-    def _build_legend_groups(self) -> str:
-        cfg = self.config
-        return "".join(
-            f'<div class="li"><div class="li-dot" style="border-color:{col};background:{col}22"></div>'
-            f' {cfg.GROUP_LABELS[key]}</div>\n'
-            for key, col in cfg.GROUP_COLORS.items()
-        )
-
-    def _build_legend_links(self) -> str:
-        cfg = self.config
-        return "".join(
-            f'<div class="li"><div class="li-line" style="background:{col}"></div>'
-            f' {key.capitalize()}</div>\n'
-            for key, col in cfg.LINK_COLORS.items()
-        )
-
     # ── Summary block ─────────────────────────────────────────────────────────
 
     @staticmethod
@@ -76,8 +58,6 @@ class HTMLBuilder:
         nodes_json      = json.dumps(chars, ensure_ascii=False)
         links_json      = json.dumps(rels,  ensure_ascii=False)
         summary_paras   = self._build_summary_html(summary)
-        legend_groups   = self._build_legend_groups()
-        legend_links    = self._build_legend_links()
         group_colors_js = json.dumps(self.config.GROUP_COLORS)
         link_colors_js  = json.dumps(self.config.LINK_COLORS)
 
@@ -85,8 +65,6 @@ class HTMLBuilder:
             title=title,
             author=author,
             summary_paras=summary_paras,
-            legend_groups=legend_groups,
-            legend_links=legend_links,
             nodes_json=nodes_json,
             links_json=links_json,
             group_colors_json=group_colors_js,
@@ -98,8 +76,6 @@ class HTMLBuilder:
         title: str,
         author: str,
         summary_paras: str,
-        legend_groups: str,
-        legend_links: str,
         nodes_json: str,
         links_json: str,
         group_colors_json: str,
@@ -315,47 +291,6 @@ class HTMLBuilder:
     font-style: italic;
   }}
 
-  /* Legend — bottom left */
-  #legend {{
-    position: fixed;
-    left: 22px;
-    bottom: 22px;
-    background: rgba(248,244,238,0.92);
-    border: 1px solid var(--dim);
-    border-radius: 3px;
-    padding: 12px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    z-index: 9;
-  }}
-  #legend h4 {{
-    font-family: 'Playfair Display', serif;
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 2px;
-  }}
-  .li {{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-style: italic;
-    color: var(--muted);
-  }}
-  .li-dot {{
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    border: 1.5px solid;
-    flex-shrink: 0;
-  }}
-  .li-line {{
-    width: 20px; height: 1.5px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }}
   .sep {{ height: 1px; background: var(--dim); margin: 3px 0; opacity: 0.5; }}
 
   #hint {{
@@ -395,14 +330,6 @@ class HTMLBuilder:
   <h2>Summary</h2>
   <div class="author">{author}</div>
   {summary_paras}
-</div>
-
-<div id="legend">
-  <h4>Characters</h4>
-  {legend_groups}
-  <div class="sep"></div>
-  <h4>Relationships</h4>
-  {legend_links}
 </div>
 
 <div id="hint">Click a character · Drag to explore · Scroll to zoom</div>
