@@ -104,6 +104,22 @@ class HTMLBuilder:
 
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
 
+  @keyframes fadeUp {{
+    from {{ opacity: 0; transform: translateY(14px); }}
+    to   {{ opacity: 1; transform: translateY(0); }}
+  }}
+  @keyframes shimmer {{
+    0%   {{ background-position: -200% center; }}
+    100% {{ background-position:  200% center; }}
+  }}
+  @keyframes pulse {{
+    0%, 100% {{ opacity: 0.55; }}
+    50%       {{ opacity: 0.95; }}
+  }}
+  @keyframes flowDash {{
+    to {{ stroke-dashoffset: -12; }}
+  }}
+
   body {{
     background: var(--bg);
     color: var(--text);
@@ -130,16 +146,29 @@ class HTMLBuilder:
     display: flex;
     align-items: baseline;
     gap: 14px;
+    animation: fadeUp 0.6s ease both;
+  }}
+  header::after {{
+    content: '';
+    position: absolute;
+    bottom: 0; left: 32px; right: 32px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
   }}
   header h1 {{
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
+    font-size: 26px;
     font-weight: 700;
-    color: var(--gold-l);
     letter-spacing: 0.05em;
+    background: linear-gradient(90deg, var(--gold) 0%, #e8d090 35%, #c8a050 55%, var(--gold-l) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
   }}
   header span {{
-    font-size: 13px;
+    font-size: 14px;
     color: var(--muted);
     font-style: italic;
   }}
@@ -149,10 +178,15 @@ class HTMLBuilder:
   .link {{
     fill: none;
     stroke-width: 1.5;
-    opacity: 0.4;
+    opacity: 0.45;
     transition: opacity 0.2s, stroke-width 0.2s;
   }}
-  .link.highlighted {{ opacity: 1; stroke-width: 2.5; }}
+  .link.highlighted {{
+    opacity: 1;
+    stroke-width: 2.5;
+    stroke-dasharray: 8, 4;
+    animation: flowDash 0.8s linear infinite;
+  }}
   .link.dimmed {{ opacity: 0.05; }}
 
   .node {{ cursor: pointer; }}
@@ -169,9 +203,8 @@ class HTMLBuilder:
 
   .link-label {{
     font-family: 'Lora', serif;
-    font-size: 9.5px;
+    font-size: 10px;
     font-style: italic;
-    fill: var(--muted);
     text-anchor: middle;
     pointer-events: none;
     opacity: 0;
@@ -188,7 +221,8 @@ class HTMLBuilder:
     flex-direction: column;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.3s;
+    transform: translateX(-20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
     border-right: 1px solid transparent;
     overflow-y: auto;
     scrollbar-width: none;
@@ -196,6 +230,7 @@ class HTMLBuilder:
   #panel::-webkit-scrollbar {{ display: none; }}
   #panel.visible {{
     opacity: 1;
+    transform: translateX(0);
     pointer-events: all;
     border-right-color: var(--border);
   }}
@@ -203,7 +238,7 @@ class HTMLBuilder:
   #panel-bar {{ width: 30px; height: 2px; border-radius: 2px; margin-bottom: 12px; }}
   #panel-name {{
     font-family: 'Playfair Display', serif;
-    font-size: 19px;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 4px;
     line-height: 1.2;
@@ -217,7 +252,7 @@ class HTMLBuilder:
     margin-bottom: 16px;
   }}
   #panel-desc {{
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.78;
     color: #7a6a5a;
     margin-bottom: 22px;
@@ -238,19 +273,24 @@ class HTMLBuilder:
     flex-direction: column;
     gap: 2px;
     margin-bottom: 11px;
-    padding-left: 10px;
+    padding: 6px 10px;
     border-left: 2px solid transparent;
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
   }}
-  .rel-item:hover {{ border-left-color: var(--gold); }}
+  .rel-item:hover {{
+    border-left-color: var(--gold);
+    background: rgba(192,154,96,0.1);
+    transform: translateX(4px);
+  }}
   .rel-name {{
     font-family: 'Playfair Display', serif;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: 700;
   }}
   .rel-label {{
-    font-size: 11.5px;
+    font-size: 13px;
     color: var(--muted);
     font-style: italic;
   }}
@@ -265,6 +305,7 @@ class HTMLBuilder:
     border-left: 1px solid var(--border);
     overflow-y: auto;
     scrollbar-width: none;
+    animation: fadeUp 0.7s ease 0.15s both;
   }}
   #summary::-webkit-scrollbar {{ display: none; }}
   #summary h2 {{
@@ -276,7 +317,7 @@ class HTMLBuilder:
     margin-bottom: 5px;
   }}
   #summary .author {{
-    font-size: 12px;
+    font-size: 14px;
     color: var(--muted);
     font-style: italic;
     margin-bottom: 14px;
@@ -284,7 +325,7 @@ class HTMLBuilder:
     border-bottom: 1px solid var(--dim);
   }}
   #summary p {{
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.82;
     color: #7a6a5a;
     margin-bottom: 13px;
@@ -297,12 +338,20 @@ class HTMLBuilder:
     position: fixed;
     bottom: 18px;
     left: 50%;
-    transform: translateX(-15%);
-    font-size: 11px;
+    transform: translateX(-50%);
+    font-size: 12px;
     font-style: italic;
-    color: var(--dim);
+    color: var(--muted);
     letter-spacing: 0.08em;
     white-space: nowrap;
+    background: rgba(248,244,238,0.75);
+    border: 1px solid rgba(184,168,152,0.5);
+    border-radius: 20px;
+    padding: 6px 18px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    pointer-events: none;
+    animation: pulse 3s ease-in-out infinite;
   }}
 </style>
 </head>
@@ -357,12 +406,25 @@ let W = window.innerWidth, H = window.innerHeight;
 svg.attr("width", W).attr("height", H);
 
 const defs = svg.append("defs");
+
+// Glow filter
 const flt = defs.append("filter").attr("id", "glow")
   .attr("x", "-50%").attr("y", "-50%").attr("width", "200%").attr("height", "200%");
 flt.append("feGaussianBlur").attr("in", "SourceGraphic").attr("stdDeviation", "4").attr("result", "blur");
 const fm = flt.append("feMerge");
 fm.append("feMergeNode").attr("in", "blur");
 fm.append("feMergeNode").attr("in", "SourceGraphic");
+
+// Per-link gradient defs
+rawLinks.forEach((l, i) => {{
+  l._gradId = `lg${{i}}`;
+  const grad = defs.append("linearGradient")
+    .attr("id", l._gradId)
+    .attr("gradientUnits", "userSpaceOnUse");
+  l._gradEl = grad;
+  l._stopA  = grad.append("stop").attr("offset", "0%");
+  l._stopB  = grad.append("stop").attr("offset", "100%");
+}});
 
 const g = svg.append("g");
 svg.call(d3.zoom().scaleExtent([0.2, 4]).on("zoom", e => g.attr("transform", e.transform)));
@@ -385,12 +447,13 @@ const sim = d3.forceSimulation(rawNodes)
 const link = g.append("g").selectAll("line")
   .data(rawLinks).join("line")
   .attr("class", "link")
-  .attr("stroke", d => d.color || "#5a6b5a")
+  .attr("stroke", d => `url(#${{d._gradId}})`)
   .attr("stroke-dasharray", d => d.dash || null);
 
 const linkLabel = g.append("g").selectAll("text")
   .data(rawLinks).join("text")
   .attr("class", "link-label")
+  .attr("fill", d => LINK_COLORS[d.type] || "var(--muted)")
   .text(d => d.label || "");
 
 // ── Nodes ──
@@ -403,8 +466,16 @@ const node = g.append("g").selectAll(".node")
     .on("end",   (e, d) => {{ if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }})
   )
   .on("click",      (e, d) => {{ e.stopPropagation(); showPanel(d); setHL(d); }})
-  .on("mouseenter", (e, d) => {{ if (!selected) hoverHL(d, true); }})
-  .on("mouseleave", (e, d) => {{ if (!selected) hoverHL(d, false); }});
+  .on("mouseenter", (e, d) => {{
+    d3.select(e.currentTarget).select(".node-main")
+      .style("filter", `drop-shadow(0 0 8px ${{d.color || '#c4a45a'}})`);
+    if (!selected) hoverHL(d, true);
+  }})
+  .on("mouseleave", (e, d) => {{
+    d3.select(e.currentTarget).select(".node-main")
+      .style("filter", null);
+    if (!selected) hoverHL(d, false);
+  }});
 
 // Glow halo for large nodes
 node.filter(d => (d.size || 14) >= 22)
@@ -415,19 +486,33 @@ node.filter(d => (d.size || 14) >= 22)
   .style("filter", "url(#glow)");
 
 node.append("circle")
+  .attr("class", "node-main")
   .attr("r", d => d.size || 14)
   .attr("fill", d => (d.color || "#c4a45a") + "1e")
   .attr("stroke", d => d.color || "#c4a45a");
 
 node.append("text")
   .attr("class", "node-label")
-  .attr("dy", d => (d.size || 14) + 13)
+  .attr("dy", d => (d.size || 14) + 15)
   .text(d => d.name)
-  .style("font-size", d => (d.size || 14) >= 24 ? "11.5px" : "10px")
+  .style("font-size", d => {{
+    const s = d.size || 14;
+    if (s >= 26) return "16px";
+    if (s >= 18) return "14.5px";
+    return "13px";
+  }})
   .attr("fill", d => d.color || "#c4a45a");
 
 // ── Tick ──
 sim.on("tick", () => {{
+  rawLinks.forEach(l => {{
+    if (!l.source || !l.target) return;
+    l._gradEl
+      .attr("x1", l.source.x).attr("y1", l.source.y)
+      .attr("x2", l.target.x).attr("y2", l.target.y);
+    l._stopA.attr("stop-color", l.source.color || "#c4a45a");
+    l._stopB.attr("stop-color", l.target.color || "#c4a45a");
+  }});
   link
     .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
     .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
@@ -442,16 +527,24 @@ let selected = null;
 const conn = (l, d) => l.source.id === d.id || l.target.id === d.id;
 
 function hoverHL(d, on) {{
-  link.classed("highlighted", l => on && conn(l, d));
-  link.classed("dimmed",      l => on && !conn(l, d));
-  linkLabel.attr("opacity",   l => on && conn(l, d) ? 0.9 : 0);
+  link
+    .classed("highlighted", l => on && conn(l, d))
+    .classed("dimmed",      l => on && !conn(l, d))
+    .style("filter",        l => on && conn(l, d)
+      ? `drop-shadow(0 0 5px ${{LINK_COLORS[l.type] || '#c4a45a'}})`
+      : null);
+  linkLabel.attr("opacity", l => on && conn(l, d) ? 0.9 : 0);
 }}
 
 function setHL(d) {{
   selected = d;
-  link.classed("highlighted", l => conn(l, d));
-  link.classed("dimmed",      l => !conn(l, d));
-  linkLabel.attr("opacity",   l => conn(l, d) ? 0.9 : 0);
+  link
+    .classed("highlighted", l => conn(l, d))
+    .classed("dimmed",      l => !conn(l, d))
+    .style("filter",        l => conn(l, d)
+      ? `drop-shadow(0 0 5px ${{LINK_COLORS[l.type] || '#c4a45a'}})`
+      : null);
+  linkLabel.attr("opacity", l => conn(l, d) ? 0.9 : 0);
 }}
 
 function showPanel(d) {{
@@ -485,7 +578,8 @@ function showPanel(d) {{
 svg.on("click", () => {{
   selected = null;
   document.getElementById("panel").classList.remove("visible");
-  link.classed("highlighted", false).classed("dimmed", false);
+  link.classed("highlighted", false).classed("dimmed", false)
+      .style("filter", null);
   linkLabel.attr("opacity", 0);
 }});
 

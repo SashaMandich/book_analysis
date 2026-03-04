@@ -19,12 +19,12 @@ class NetworkConfig:
     }
 
     LINK_COLORS = {
-        "love":         "#d4906a",
-        "family":       "#6a9ab8",
-        "friendship":   "#6aaa7a",
-        "conflict":     "#c47070",
-        "rivalry":      "#a87aaa",
-        "professional": "#a0a870",
+        "love":         "#e8785a",
+        "family":       "#5a8ac4",
+        "friendship":   "#6abf78",
+        "conflict":     "#c45555",
+        "rivalry":      "#b870c4",
+        "professional": "#909a50",
         "other":        "#8a9aaa",
     }
 
