@@ -1,5 +1,7 @@
 # Book Character Network
 
+<img width="1348" height="679" alt="Screenshot 2026-03-05 at 09 24 47" src="https://github.com/user-attachments/assets/d9b97ca7-70ac-4b37-97d4-ac5a557e1bc6" />
+
 Extracts characters and relationships from a book (`.txt`, `.epub`, `.pdf`) using the Claude API and generates a self-contained, interactive D3.js HTML visualization.
 
 ## Project Structure
