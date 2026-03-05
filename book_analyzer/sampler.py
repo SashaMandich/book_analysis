@@ -7,7 +7,15 @@ the full narrative arc without exceeding token limits.
 
 
 class TextSampler:
-    """Samples beginning + middle + end so Claude sees the full narrative arc."""
+    """
+    Samples beginning + middle + end so Claude sees the full narrative arc.
+
+    A full novel can be 500K–1M+ characters, which would exceed Claude's context
+    window or be very expensive to process. By sampling three evenly-spaced chunks,
+    Claude still gets a sense of how the story starts (setup, characters, tone),
+    how it develops (midpoint events), and how it ends (resolution) — without
+    processing the full text.
+    """
 
     def __init__(self, max_chars: int = 80_000):
         self.max_chars = max_chars
