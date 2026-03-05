@@ -13,7 +13,7 @@ class ClaudeAnalyzer:
     """Calls the Claude API to extract characters and relationships from text."""
 
     MODEL      = "claude-opus-4-6"
-    MAX_TOKENS = 8192
+    MAX_TOKENS = 20000
 
     SYSTEM_PROMPT = """\
 You are a literary analyst specializing in character mapping.
