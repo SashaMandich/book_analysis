@@ -41,7 +41,7 @@ class CharacterNetworkApp:
     def run(self) -> None:
         self._validate_api_key()
 
-        print(f"\n📚  Book Character Network Generator")
+        print(f"\n📚  Book Characters Interaction")
         print(f"{'─' * 40}")
         print(f"  Input : {self.args.book}")
         print(f"  Output: {self.output_path}\n")

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Book Character Network Generator
+Book Characters Interaction
 =================================
 Extracts characters from a book (TXT, EPUB, PDF) using the Claude API
 and generates an interactive D3.js HTML visualization of their relationships.
